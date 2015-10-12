@@ -8,4 +8,4 @@ simplejson
 sorl-thumbnail
 django-social-auth
 django-resized
-password_reset
+django-password-reset
