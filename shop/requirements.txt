@@ -1,5 +1,4 @@
 Django
-Pillow
 django-breadcrumbs
 django-debug-toolbar
 django-mptt
@@ -9,3 +8,4 @@ simplejson
 sorl-thumbnail
 django-social-auth
 django-resized
+password_reset
