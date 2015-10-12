@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load tz %}
+{% block content %}
+    <link href="/static/css/cart.css"  rel="stylesheet">
+
+<div class="container text-center">
+	<div class="col-md-12 col-sm-12 text-left">
+		<ol class="breadcrumb custheader">
+			<li>
+				История заказов
+			</li>
+		</ol>
+{% if orders %}
+<div class="table-responsive">
+<table class="table table-bordered table-striped tabali">
+    <thread>
+    <tr>
+     <th>#</th>
+     <th>Итого</th>
+     <th>Дата</th>
+     <th>Статус</th>
+     <th>Самовывоз</th>
+     <th>Изменить</th>
+     <th>Отменить</th>
+    </tr>
+    </thread>
+{% for  order in orders  %}
+{% if not order.status == "unsubmited" %}
+    <tr>
+     <td>{{ order.id }}</td>
+     <td>{{ order.get_total }}$</td>
+     <td>{{ order.timestamp|timezone:"Europe/Minsk"|date:'Y-m-d H:i' }}</td>
+     <td>{{ order.status }}</td>
+	 <td>
+{% if order.self_delivery == True %}
+     <span class="glyphicon glyphicon-ok"></span>
+{% elif order.self_delivery == False %}
+     <span class="glyphicon glyphicon-minus"></span>
+{% endif %}
+	 </td>
+{% if order.status == "ожидание" %}
+     <td><a href="/cart/edit/{{order.id}}/"><span class="glyphicon glyphicon-pencil"></a></td>
+     <td><a href="/cart/status/{{order.id}}/4/"><span class="glyphicon glyphicon-remove"></span></a></td>
+{% else %}
+     <td></td>
+     <td></td>
+{% endif %}
+    </tr>
+{% endif %}
+{% endfor %}
+</table>
+</div>
+{% else %}
+<h5>Вы еще ничего не заказывали</h5>
+{% endif %}
+	</div>
+</div>
+{% endblock %}

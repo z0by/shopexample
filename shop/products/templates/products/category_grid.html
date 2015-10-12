@@ -1,0 +1,46 @@
+{% for product in products %}
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-item">
+                                <div class="photo">
+                                    <img src="{{ product.image_url }}" class="img-responsive" alt="a" />
+                                </div>
+                                <div class="info">
+
+                                        <div class="price  col-lg-6 col-md-12">
+                                            <h4>
+                                                <a href="{{ product.get_absolute_url  }}"> {{ product.title }}</a></h4>
+
+                                                {% if product.sale_price > 0 and product.sale_price <  product.price   %}
+                                                     <h4 class="price-sale-color"><b>{{ product.sale_price  }}</b></h4>
+                                                    <h4 class="price-text-color"> <del>{{ product.price }}</del></h4>
+
+                                                    {% else %}
+                                                <br>
+                                                       <h4 class="price-text-color">
+
+                                                     {{ product.price }}
+                                              </h4>
+                                            {% endif %}
+                                        </div>
+                                        <div class="rating-catalog col-lg-6 col-md-12">
+
+                                            <div id="product{{ product.id }}"  class="rating"  data-size="xs" data-step="0.1" data-readonly="true"  data-disabled="true" data-show-clear="false" data-show-caption="false">
+
+                                            </div>
+
+                                        </div>
+
+                                    <div class="separator clear-left">
+                                        <p class="btn-add">
+                                            <a href="{% url 'add' product.id %}" class="in-cart" title="Добавить в корзину"><i class="fa fa-shopping-cart fa-3x"></i></a></p>
+                                        <p class="btn-details">
+                                            <a href="{{ product.get_absolute_url  }}" class="" title="Подробнее"><i class="fa fa-list fa-3x"></i></a></p>
+                                    </div>
+                                    <div class="clearfix">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+{% endfor %}
+

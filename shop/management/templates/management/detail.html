@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load tz %}
+{% block breadcrumbs %}
+{% endblock %}
+{% block content %}
+    <link href="/static/css/cart.css"  rel="stylesheet">
+
+<div class="container text-center">
+	<div class="col-md-12 col-sm-12 text-left">
+		<ol class="breadcrumb custheader">
+			<li>
+				Подробности заказа
+			</li>
+		</ol>
+		<li>
+				Дата заказа: {{ order.timestamp|timezone:"Europe/Minsk"|date:'Y-m-d H:i' }}
+		</li>
+		<li>
+				Сумма заказа: {{ order.get_total }}$
+		</li>
+		<li>
+				Статус заказа: {{ order.status }}
+		</li>
+		<li>
+				Самовывоз: 
+{% if order.self_delivery == True %}
+     <span class="glyphicon glyphicon-ok"></span>
+{% elif order.self_delivery == False %}
+     <span class="glyphicon glyphicon-minus"></span>
+{% endif %}
+		</li>
+{% if order.self_delivery == False %}
+		<li>
+				Адрес доставки: {{ order.delivery_adress }}
+		</li>
+		<li>
+				Время доставки: {{ order.delivery_time }}
+		</li>
+{% endif %}
+		<li>
+				Контактный телефон: {{ order.contact_phone }}
+		</li>
+		<br>
+		<div class="table-responsive">
+			<table class="table table-bordered table-striped tabali">
+				<thread>
+					<tr>
+						 <th>#</th>
+						 <th>Товар</th>
+						 <th>Цена</th>
+						 <th>Количество</th>
+					</tr>
+				</thread>
+				{% for good in order.good_set.all  %}
+				<tr>
+					 <td>{{ good.good_type.id }}</td>
+					 <td><a href=/products/products/{{ good.good_type.id }}/>{{ good.good_type }}</a></td>
+					 <td>{{ good.fixed_price }}</td>
+					 <td>{{ good.ammount }}</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}

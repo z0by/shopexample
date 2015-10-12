@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load tz %}
+{% block breadcrumbs %}
+{% endblock %}
+{% block content %}
+    <link href="/static/css/cart.css"  rel="stylesheet">
+
+<div class="container text-center">
+	<div class="text-left">
+		<ol class="breadcrumb custheader">
+			<li>
+				<a href=/management/>Ваши заказы</a>
+			</li>
+			<li>
+				Ожидающие заказы
+			</li>
+		</ol>
+{% if orders %}
+<div class="table-responsive">
+<table class="table table-bordered table-striped tabali">
+    <thread>
+    <tr>
+     <th>#</th>
+     <th>Всего</th>
+     <th>Дата</th>
+     <th>Самовывоз</th>
+     <th>Взять</th>
+     <th>Подробно</th>
+    </tr>
+    </thread>
+{% for  order in orders  %}
+    <tr>
+     <td>{{ order.id }}</td>
+     <td>{{ order.get_total }}$</td>
+     <td>{{ order.timestamp|timezone:"Europe/Minsk"|date:'Y-m-d H:i' }}</td>
+     <td>
+{% if order.self_delivery == True %}
+     <span class="glyphicon glyphicon-ok"></span>
+{% elif order.self_delivery == False %}
+     <span class="glyphicon glyphicon-minus"></span>
+{% endif %}
+	 </td>
+     <td><a href="/management/status/{{order.id}}/2/"><span class="glyphicon glyphicon-arrow-down"></a></span></td>
+     <td><a href="/management/detail/{{order.id}}/"><span class="glyphicon glyphicon-th-list"></span></a></td>
+    </tr>
+{% endfor %}
+</table>
+</div>
+{% else %}
+<h5>Нет ожидающих заказов</h5>
+{% endif %}
+	</div>
+</div>
+{% endblock %}

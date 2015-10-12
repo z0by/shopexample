@@ -1,0 +1,11 @@
+Django
+Pillow
+django-breadcrumbs
+django-debug-toolbar
+django-mptt
+django-mptt-admin
+psycopg2
+simplejson
+sorl-thumbnail
+django-social-auth
+django-resized

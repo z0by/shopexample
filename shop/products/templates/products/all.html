@@ -1,0 +1,12 @@
+{% extends 'catalog.html' %}
+{% block content %}
+
+<ul>
+{% for product in products %}
+ {% if  product.active  %}
+<li> {{ product.title }} {{ product.price }}  </li>
+{% endif %}
+{% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block head_title %}Магазин | Регистрация{% endblock %}
+
+{% block breadcrumbs %}
+{% endblock %}
+{% block content %}
+    <div class="row">
+     <div class="col-md-6">
+<form class="form-horizontal" action='/account/register/' method="POST">
+    {% csrf_token %}
+  <fieldset>
+    <div id="legend">
+      <legend class="">Регистрация</legend>
+    </div>
+    <div class="control-group">
+      <!-- Username -->
+{#      <label class="control-label"  for="username">Username</label>#}
+      <div class="controls">
+        <input type="text" id="username" name="username" placeholder="Username" class="input-xlarge form-control">
+{#        <p class="help-block">Username can contain any letters or numbers, without spaces</p>#}
+          <p class="errors">{{ form.username.errors }}</p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- E-mail -->
+{#      <label class="control-label" for="email">E-mail</label>#}
+      <div class="controls">
+        <input type="text" id="email" name="email" placeholder="Email" class="input-xlarge form-control">
+{#        <p class="help-block">Please provide your E-mail</p>#}
+            <p class="errors">{{ form.email.errors }}</p>
+      </div>
+    </div>
+    <div class="control-group">
+      <!-- Password -->
+{#      <label class="control-label"  for="password_confirm">Password (Confirm)</label>#}
+      <div class="controls">
+        <input type="phone" id="phone" name="phone" placeholder="Телефон" class="input-xlarge form-control">
+{#        <p class="help-block">Please confirm password</p>#}
+             <p class="errors">{{ form.phone.errors }}</p>
+      </div>
+    </div>
+    <div class="control-group">
+      <!-- Password-->
+{#      <label class="control-label" for="password">Password</label>#}
+      <div class="controls">
+        <input type="password" id="password" name="password1" placeholder="Пароль"class="input-xlarge form-control">
+{#        <p class="help-block">Password should be at least 4 characters</p>#}
+             <p class="errors">{{ form.password1.errors }}</p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- Password -->
+{#      <label class="control-label"  for="password_confirm">Password (Confirm)</label>#}
+      <div class="controls">
+        <input type="password" id="password_confirm" name="password2" placeholder="Подтвердить пароль" class="input-xlarge form-control">
+{#        <p class="help-block">Please confirm password</p>#}
+             <p class="errors">{{ form.password2.errors }}</p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- Button -->
+      <div class="controls">
+        <button class="btn btn-success">Регистрация</button>
+      </div>
+    </div>
+  </fieldset>
+</form>
+
+    </div>
+    <div class="col-md-6">
+ <legend class="">Войти через социальные сети</legend>
+<a href="/account/facebook" title="Facebook" class="btn btn-block btn-social btn-lg btn-facebook">
+            <i class="fa fa-facebook"></i> Войти через Facebook
+</a>
+<a href="/login/twitter" title="Vk" class="btn btn-block btn-social btn-lg btn-vk">
+            <i class="fa fa-vk"></i> Войти через VK
+</a>
+<a href="/account/facebook" title="Twitter" class="btn btn-block btn-social btn-lg btn-twitter">
+           <i class="fa fa-twitter"></i> Войти через twitter
+</a>
+
+
+    </div>
+</div>
+{% endblock %}

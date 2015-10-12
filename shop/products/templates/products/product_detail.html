@@ -1,0 +1,121 @@
+{% extends 'catalog.html' %}
+{% load staticfiles %}
+{% block breadcrumbs %}
+ {% endblock %}
+{% block content %}
+<div class="row-fluid">
+ <div class="col-xs-6 col-md-4">
+     <div align="center">
+        <img src="{{ product.image_url }}" alt="{{ product.brand }} {{ product.title }}" class="img-responsive">
+      </div>
+     </div>
+
+ <div class="col-xs-6 col-md-6">
+     <h1>{{ product.title }}</h1>
+     <div class="rating">
+         <div id="input-5a"  class="rating"  data-size="sm" data-step="0.1" data-readonly="true"  data-disabled="true" data-show-clear="false" data-show-caption="false"></div>
+      </div>
+
+     <p>  Производитель: <em>{{ product.brand }}</em></p>
+      {% if product.sale_price > 0 and product.sale_price <  product.price   %}
+     <p>  Цена по скидке: <em class="price-sale-color">{{ product.sale_price }}</em></p>
+     <p>  Цена: <del><em>{{ product.price }}</em></del></p>
+          {% else %}
+
+     <p>  Цена: <em>{{ product.price }}</em></p>
+        {% endif %}
+     <form method="post" action="{% url 'add' product.id %}" class="cart">
+          {% csrf_token %}
+        <p><label for="id_quantity">Количество:</label> <input class="quantity" id="id_quantity" maxlength="5" name="quantity" size="2" type="text" value="1"><input id="id_product_slug" name="product_slug" type="hidden" value="telefon-noname-4g"></p>
+        <input class="btn btn-primary" type="submit" value="Добавить в корзину" name="submit" alt="Add To Cart">
+      </form>
+     </div>
+    <div class="tabs col-md-12">
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#description">Описание</a></li>
+  <li><a data-toggle="tab" href="#characteristic">Характеристики</a></li>
+  <li><a data-toggle="tab" href="#review">Отзывы</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="description" class="tab-pane fade in active">
+      <div class="well">
+    <h3>Описание</h3>
+    <p>{{ product.description }}</p>
+          </div>
+  </div>
+  <div id="characteristic" class="tab-pane fade">
+  <div class="well">
+    <h3>Характеристики</h3>
+   {% for feature in features %}
+     <p><b>{{feature.characteristic_type.name  }}</b> - {{feature.value  }} </p>
+
+      {% endfor %}
+  </div>
+  </div>
+  <div id="review" class="tab-pane fade">
+    <h3>Отзывы</h3>
+     {% if user.is_authenticated and not reviewexist %}
+      <form name="review" action="/review/add/?id={{ product.id }}&next={{ request.path }}" method="POST">
+           {% csrf_token %}
+    <p><b>Введите ваш отзыв:</b></p>
+    <p><textarea rows="10" cols="65" name="review" required></textarea></p>
+          <input id="input-rate" class="rating"  data-symbol="&#xf005;" data-glyphicon="false"
+    data-rating-class="rating-fa" data-step="1"  data-show-clear="false" data-show-caption="false" data-size="md" required>
+          <input id="score" type="hidden" name="score" class="rating-value" value="0">
+{#          <div class="controls controls-star">#}
+{#	<div id="star" style="cursor: pointer; width: 280px;">#}
+{#</div><br>#}
+{#  </div>#}
+    <p><input type="submit" value="Добавить отзыв"></p>
+  </form>
+  {% elif  user.is_authenticated and reviewexist %}
+  <div>Вы уже оставляли отзык к этом товару</div>
+  {% else %}
+ <div>Только зарегистрированные пользователи могут оставлять отзывы</div>
+  {% endif %}
+  <hr>
+      {% for review in reviews %}
+
+      <div class="media">
+                  <div class="media-body">
+                        <h4 class="media-heading">{{ review.user.username }}
+                            <small>{{ review.created_at }}
+                                 <div class="rating-review ">
+                                <div id="product{{ review.id }}"  class="rating"  data-size="xs" data-step="0.1" data-readonly="true"  data-disabled="true" data-show-clear="false" data-show-caption="false"></div></div></small>
+                        </h4>
+                       {{ review.review }}
+                    </div>
+
+                </div>
+{% endfor %}
+</div>
+</div>
+</div>
+    </div>
+
+{% endblock %}
+{% block js %}
+     {% comment %}<script src="{% static "js/jquery.raty.min.js"%}"></script>{% endcomment %}
+     <script src="{% static "js/star-rating.min.js"%}"></script>
+    <script>
+$('#input-rate').on('rating.change', function(event, value, caption, target) {
+    console.log(value);
+    $('#score').val(value);
+});
+$("#input-5a").rating('update', {{ product.average_review }});
+
+    </script>
+<script>
+{% for review in reviews %}
+    $("#product{{ review.id }}").rating('update', {{ review.score }});
+{% endfor %}
+</script>
+{% comment %}<script>
+$(function(){
+$.fn.raty.defaults.path='/media/images';
+$('#star').raty({number:5,score:0,targetType:'number',targetKeep:true,size:24,starHalf:'star-half-big.png',starOff:'star-off-big.png',starOn:'star-on-big.png'});
+});
+
+</script>{% endcomment %}
+{% endblock %}

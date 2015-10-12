@@ -1,0 +1,468 @@
+{% extends 'catalog.html' %}
+{% load staticfiles %}
+{% load humanize %}
+{% block content %}
+         <div class="row">
+            <div class="col-md-9">
+                <h3>
+                    <a href="{%   url 'new_products' %}"> Новинки</a></h3>
+            </div>
+            <div class="col-md-3">
+                <!-- Controls -->
+                <div class="controls pull-right hidden-xs">
+                    <a class="left fa fa-chevron-left btn btn-primary" href="#carousel-new_product"
+                        data-slide="prev"></a><a class="right fa fa-chevron-right btn btn-primary" href="#carousel-new_product"
+                            data-slide="next"></a>
+                </div>
+            </div>
+        </div>
+
+        <div id="carousel-new_product" class="carousel slide hidden-xs" data-ride="carousel">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <div class="row">
+                        {% for product in new_products|slice:":3" %}
+                        <div class="col-sm-4">
+                            <div class="col-item">
+                                <div class="photo">
+                                      <a href="{{ product.get_absolute_url }}"><img src="{{ product.image_url  }}"  alt="a" width="250"/></a>
+                                </div>
+                                <div class="info">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4>
+                                               <a href="{{ product.get_absolute_url  }}"> {{ product.title }}</a>
+                                            </h4>
+
+                                        </div>
+                                         {% if product.sale_price > 0 and product.sale_price <  product.price   %}
+                                        <div class="price col-md-12">
+                                         <h5 class="price-sale-color">
+                                                {{ product.sale_price | intcomma }} руб.
+                                         </h5>
+                                        </div>
+                                        <div class="price col-md-6">
+                                         <h5 class="price-text-color">
+                                                <del>{{ product.price | intcomma }} руб.</del>
+                                         </h5>
+                                        </div>
+                                         {% else %}
+                                            <div class="price col-md-12">
+                                         <h5 class="price-text-color">
+                                          <br>
+                                         </h5>
+                                        </div>
+                                        <div class="price col-md-6">
+                                         <h5 class="price-text-color">
+                                                {{ product.price | intcomma }} руб.
+                                         </h5>
+                                        </div>
+                                        {% endif %}
+                                         <div class="rating_new_product  col-lg-6 colmd-12">
+
+                    <div id="newproduct{{ product.id }}"  class="rating"  data-size="xs" data-step="0.1" data-readonly="true"  data-disabled="true" data-show-clear="false" data-show-caption="false"></div>
+
+                                        </div>
+                                    </div>
+                                    <div class="separator clear-left">
+                                        <p class="btn-add">
+                                          <a href="{% url 'add' product.id %}" class="in-cart" title="Добавить в корзину"><i class="fa fa-shopping-cart fa-2x"></i><i  class="hide cart-spinner fa fa-spinner fa-pulse fa-2x"></i></a></p>
+                                        <p class="btn-details">
+                                        <a href="{{ product.get_absolute_url  }}" class="" title="Подробнее"><i class="fa fa-list fa-2x"></i></a></p>
+                                    </div>
+                                    <div class="clearfix">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+                    </div>
+                </div>
+           <div class="item">
+                    <div class="row">
+                        {% for product in new_products|slice:"3:6" %}
+                        <div class="col-sm-4">
+                            <div class="col-item">
+                                <div class="photo">
+                                        <a href="{{ product.get_absolute_url }}"><img src="{{ product.image_url  }}"  alt="a" width="250"/></a>
+                                </div>
+                                <div class="info">
+                                      <div class="row">
+                                        <div class="price  col-md-12">
+                                            <h4>
+                                               <a href="{{ product.get_absolute_url  }}"> {{ product.title }}</a>
+                                            </h4>
+
+                                        </div>
+                                         {% if product.sale_price > 0 and product.sale_price <  product.price   %}
+                                        <div class="price col-md-12">
+                                         <h5 class="price-sale-color">
+                                                {{ product.sale_price | intcomma }} руб.
+                                         </h5>
+                                        </div>
+                                        <div class="price col-md-6">
+                                         <h5 class="price-text-color">
+                                                <del>{{ product.price | intcomma }} руб.</del>
+                                         </h5>
+                                        </div>
+                                         {% else %}
+                                              <div class="price col-md-12">
+                                         <h5 class="price-text-color">
+                                          <br>
+                                         </h5>
+                                        </div>
+                                        <div class="price col-md-6">
+                                         <h5 class="price-text-color">
+                                                {{ product.price | intcomma }} руб.
+                                         </h5>
+                                        </div>
+                                        {% endif %}
+
+                                         <div class="rating_new_product  col-lg-6 colmd-12">
+
+                    <div id="newproduct{{ product.id }}"  class="rating"  data-size="xs" data-step="0.1" data-readonly="true"  data-disabled="true" data-show-clear="false" data-show-caption="false"></div>
+
+                                        </div>
+                                    </div>
+                                    <div class="separator clear-left">
+                                        <p class="btn-add">
+                                          <a href="{% url 'add' product.id %}" class="in-cart" title="Добавить в корзину"><i class="fa fa-shopping-cart fa-2x"></i><i  class="hide cart-spinner fa fa-spinner fa-pulse fa-2x"></i></a></p>
+                                        <p class="btn-details">
+                                            <a href="{{ product.get_absolute_url  }}" class="" title="Подробнее"><i class="fa fa-list fa-2x"></i></a></p>
+                                    </div>
+                                    <div class="clearfix">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-9">
+                <h3>
+                  Рейтинговые</h3>
+            </div>
+            <div class="col-md-3">
+                <!-- Controls -->
+                <div class="controls pull-right hidden-xs">
+                    <a class="left fa fa-chevron-left btn btn-primary" href="#carousel-rank"
+                        data-slide="prev"></a><a class="right fa fa-chevron-right btn btn-primary" href="#carousel-best_product"
+                            data-slide="next"></a>
+                </div>
+            </div>
+        </div>
+
+        <div id="carousel-best_product" class="carousel slide hidden-xs" data-ride="carousel">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <div class="row">
+                        {% for product in best_products|slice:":3" %}
+                        <div class="col-sm-4">
+                            <div class="col-item">
+                                <div class="photo">
+                                      <a href="{{ product.get_absolute_url }}"><img src="{{ product.image_url  }}"  alt="a" width="250"/></a>
+                                </div>
+                                <div class="info">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4>
+                                               <a href="{{ product.get_absolute_url  }}"> {{ product.title }}</a>
+                                            </h4>
+
+                                        </div>
+                                          {% if product.sale_price > 0 and product.sale_price <  product.price   %}
+                                        <div class="price col-md-12">
+                                         <h5 class="price-sale-color">
+                                                {{ product.sale_price | intcomma }} руб.
+                                         </h5>
+                                        </div>
+                                        <div class="price col-md-6">
+                                         <h5 class="price-text-color">
+                                                <del>{{ product.price | intcomma }} руб.</del>
+                                         </h5>
+                                        </div>
+                                         {% else %}
+                                               <div class="price col-md-12">
+                                         <h5 class="price-text-color">
+                                          <br>
+                                         </h5>
+                                        </div>
+                                        <div class="price col-md-6">
+                                         <h5 class="price-text-color">
+                                                {{ product.price | intcomma }} руб.
+                                         </h5>
+                                        </div>
+                                        {% endif %}
+
+                                         <div class="rating_new_product  col-lg-6 col-md-12">
+
+                    <div id="bestproduct{{ product.id }}"  class="rating"  data-size="xs" data-step="0.1" data-readonly="true"  data-disabled="true" data-show-clear="false" data-show-caption="false"></div>
+
+                                        </div>
+                                    </div>
+                                    <div class="separator clear-left">
+                                        <p class="btn-add">
+                                          <a href="{% url 'add' product.id %}" class="in-cart" title="Добавить в корзину"><i class="fa fa-shopping-cart fa-2x"></i><i  class="hide cart-spinner fa fa-spinner fa-pulse fa-2x"></i></a></p>
+                                        <p class="btn-details">
+                                           <a href="{{ product.get_absolute_url  }}" class="" title="Подробнее"><i class="fa fa-list fa-2x"></i></a></p>
+                                    </div>
+                                    <div class="clearfix">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+                    </div>
+                </div>
+           <div class="item">
+                    <div class="row">
+                        {% for product in best_products|slice:"3:6" %}
+                        <div class="col-sm-4">
+                            <div class="col-item">
+                                <div class="photo">
+                                       <a href="{{ product.get_absolute_url }}"><img src="{{ product.image_url  }}"  alt="a" width="250"/></a>
+                                </div>
+                                <div class="info">
+                                      <div class="row">
+                                        <div class="price  col-md-12">
+                                            <h4>
+                                               <a href="{{ product.get_absolute_url  }}"> {{ product.title }}</a>
+                                            </h4>
+
+                                        </div>
+                                          {% if product.sale_price > 0 and product.sale_price <  product.price   %}
+                                        <div class="price col-md-12">
+                                         <h5 class="price-sale-color">
+                                                {{ product.sale_price | intcomma }} руб.
+                                         </h5>
+                                        </div>
+                                        <div class="price col-md-6">
+                                         <h5 class="price-text-color">
+                                                <del>{{ product.price | intcomma }} руб.</del>
+                                         </h5>
+                                        </div>
+                                         {% else %}
+                                               <div class="price col-md-12">
+                                         <h5 class="price-text-color">
+                                          <br>
+                                         </h5>
+                                        </div>
+                                        <div class="price col-md-6">
+                                         <h5 class="price-text-color">
+                                                {{ product.price | intcomma }} руб.
+                                         </h5>
+                                        </div>
+                                        {% endif %}
+
+                                         <div class="rating_new_product  col-lg-6 col-md-12">
+
+                    <div id="bestproduct{{ product.id }}"  class="rating"  data-size="xs" data-step="0.1" data-readonly="true"  data-disabled="true" data-show-clear="false" data-show-caption="false"></div>
+
+                                        </div>
+                                    </div>
+                                    <div class="separator clear-left">
+                                        <p class="btn-add">
+                                          <a href="{% url 'add' product.id %}" class="in-cart" title="Добавить в корзину"><i class="fa fa-shopping-cart fa-2x"></i><i  class="hide cart-spinner fa fa-spinner fa-pulse fa-2x"></i></a></p>
+                                        <p class="btn-details">
+                                              <a href="{{ product.get_absolute_url  }}" class="" title="Подробнее"><i class="fa fa-list fa-2x"></i></a></p>
+                                    </div>
+                                    <div class="clearfix">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+ {% if sale_products %}
+    <div class="row">
+            <div class="col-md-9">
+                <h3>
+                  <a href="{%   url 'sale_products' %}">Скидки</a></h3>
+            </div>
+            <div class="col-md-3">
+                <!-- Controls -->
+                <div class="controls pull-right hidden-xs">
+                    <a class="left fa fa-chevron-left btn btn-primary" href="#carousel-sale"
+                        data-slide="prev"></a><a class="right fa fa-chevron-right btn btn-primary" href="#carousel-sale"
+                            data-slide="next"></a>
+                </div>
+            </div>
+        </div>
+
+        <div id="carousel-sale" class="carousel slide hidden-xs" data-ride="carousel">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <div class="row">
+                        {% for product in sale_products|slice:":3" %}
+                        <div class="col-sm-4">
+                            <div class="col-item">
+                                <div class="photo">
+                                     <a href="{{ product.get_absolute_url }}"><img src="{{ product.image_url  }}"  alt="a" width="250"/></a>
+                                </div>
+                                <div class="info">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4>
+                                               <a href="{{ product.get_absolute_url  }}"> {{ product.title }}</a>
+                                            </h4>
+
+                                        </div>
+                                          {% if product.sale_price > 0 and product.sale_price <  product.price   %}
+                                        <div class="price col-md-12">
+                                         <h5 class="price-sale-color">
+                                                {{ product.sale_price | intcomma }} руб.
+                                         </h5>
+                                        </div>
+                                        <div class="price col-md-6">
+                                         <h5 class="price-text-color">
+                                                <del>{{ product.price | intcomma }} руб.</del>
+                                         </h5>
+                                        </div>
+                                         {% else %}
+                                               <div class="price col-md-12">
+                                         <h5 class="price-text-color">
+                                          <br>
+                                         </h5>
+                                        </div>
+                                        <div class="price col-md-6">
+                                         <h5 class="price-text-color">
+                                                {{ product.price | intcomma }} руб.
+                                         </h5>
+                                        </div>
+                                        {% endif %}
+
+                                         <div class="rating_new_product  col-lg-6 col-md-12">
+
+                    <div id="saleproduct{{ product.id }}"  class="rating"  data-size="xs" data-step="0.1" data-readonly="true"  data-disabled="true" data-show-clear="false" data-show-caption="false"></div>
+
+                                        </div>
+                                    </div>
+                                    <div class="separator clear-left">
+                                        <p class="btn-add">
+                                          <a href="{% url 'add' product.id %}" class="in-cart" title="Добавить в корзину"><i class="fa fa-shopping-cart fa-2x"></i><i  class="hide cart-spinner fa fa-spinner fa-pulse fa-2x"></i></a></p>
+                                        <p class="btn-details">
+                                           <a href="{{ product.get_absolute_url  }}" class="" title="Подробнее"><i class="fa fa-list fa-2x"></i></a></p>
+                                    </div>
+                                    <div class="clearfix">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+                    </div>
+                </div>
+           <div class="item">
+                    <div class="row">
+                        {% for product in sale_products|slice:"3:6" %}
+                        <div class="col-sm-4">
+                            <div class="col-item">
+                                <div class="photo">
+                                       <a href="{{ product.get_absolute_url }}"><img src="{{ product.image_url  }}"  alt="a" width="250"/></a>
+                                </div>
+                                <div class="info">
+                                      <div class="row">
+                                        <div class="price  col-md-12">
+                                            <h4>
+                                               <a href="{{ product.get_absolute_url  }}"> {{ product.title }}</a>
+                                            </h4>
+
+                                        </div>
+                                         {% if product.sale_price > 0 and product.sale_price <  product.price   %}
+                                        <div class="price col-md-12">
+                                         <h5 class="price-sale-color">
+                                                {{ product.sale_price | intcomma }} руб.
+                                         </h5>
+                                        </div>
+                                        <div class="price col-md-6">
+                                         <h5 class="price-text-color">
+                                                <del>{{ product.price | intcomma }} руб.</del>
+                                         </h5>
+                                        </div>
+                                         {% else %}
+                                              <div class="price col-md-12">
+                                         <h5 class="price-text-color">
+                                          <br>
+                                         </h5>
+                                        </div>
+                                        <div class="price col-md-6">
+                                         <h5 class="price-text-color">
+                                                {{ product.price | intcomma }} руб.
+                                         </h5>
+                                        </div>
+                                        {% endif %}
+
+                                         <div class="rating_new_product  col-lg-6 colmd-12">
+
+                    <div id="saleproduct{{ product.id }}"  class="rating"  data-size="xs" data-step="0.1" data-readonly="true"  data-disabled="true" data-show-clear="false" data-show-caption="false"></div>
+
+                                        </div>
+                                    </div>
+                                    <div class="separator clear-left">
+                                        <p class="btn-add">
+                                          <a href="{% url 'add' product.id %}" class="in-cart" title="Добавить в корзину"><i class="fa fa-shopping-cart fa-2x"></i><i  class="hide cart-spinner fa fa-spinner fa-pulse fa-2x"></i></a></p>
+                                        <p class="btn-details">
+                                             <a href="{{ product.get_absolute_url  }}" class="" title="Подробнее"><i class="fa fa-list fa-2x"></i></a></p>
+                                    </div>
+                                    <div class="clearfix">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+{% endif %}
+{% endblock %}
+{% block js %}
+     {% comment %}<script src="{% static "js/jquery.raty.min.js"%}"></script>{% endcomment %}
+     <script src="{% static "js/star-rating.min.js"%}"></script>
+      <script src="{% static "js/catalog.js"%}"></script>
+    {% for product in new_products %}
+    <script>
+
+$("#newproduct{{ product.id }}").rating('update', {{ product.average_review }});
+    </script>
+{% endfor %}
+    {% for product in best_products %}
+    <script>
+
+$("#bestproduct{{ product.id }}").rating('update', {{ product.average_review }});
+    </script>
+{% endfor %}
+    {% for product in sale_products %}
+    <script>
+
+$("#saleproduct{{ product.id }}").rating('update', {{ product.average_review }});
+    </script>
+{% endfor %}
+{% endblock %}

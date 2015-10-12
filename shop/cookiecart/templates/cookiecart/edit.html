@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+    <link href="/static/css/cart.css"  rel="stylesheet">
+		
+<div class="container text-center">
+
+	<div class="col-md-5 col-sm-12">
+		<img src="/static/images/sprite.png" alt="cart" height="200" width="200">
+		<h1>Изменение заказа</h1>
+		<p>
+			Пока не началась обработка заказа, Вы еще можете внести изменения в сделанный Вами заказ.
+		</p>
+	</div>
+		
+	<div class="col-md-7 col-sm-12 text-left">
+		{% if order.good_set.all %}
+		{% for good in order.good_set.all %}
+		<div class="well">
+			<div class="row">
+				<div class="col-xs-6 col-sm-6 col-md-6 good">
+					<a href=/products/products/{{ good.good_type.id }}/>{{ good.good_type }}</a>
+				</div>
+				<div class="col-xs-4 col-sm-4 col-md-4 price rightal"">
+					{{ good.fixed_price }}$
+				</div>
+				<div class="col-xs-2 col-sm-2 col-md-2">
+						<input type="integer" name="ammount" class="ammount" value={{good.ammount}} disabled/>
+				</div>
+			</div>
+		</div>
+        {% endfor %}
+		<div class="rightal">
+			<span>Итого:</span>
+			<span class="price">{{ order.get_total }}$</span>
+		</div>
+		<form action="" method="post">
+			{% csrf_token %}
+			{{ editform.non_field_errors }}
+            <table class="tablepad">
+				{% for field in editform %}
+					<tr>
+		        <td>{{ field.label_tag }} {{ field.errors }}</td>
+				<td>{{ field }}</td>
+					</tr>
+				{% endfor %}
+            </table>
+			<input type="submit" class="add btn" value="Сохранить изменения" />
+		</form>
+	</div>
+    {% else %}
+    <h3>Заказ не содержит товаров</h3>
+    {% endif %}
+</div>
+<script src="/static/js/cart.js"%}"></script>
+{% endblock %}

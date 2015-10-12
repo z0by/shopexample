@@ -1,0 +1,139 @@
+{% extends 'catalog.html' %}
+{% load staticfiles %}
+
+    {% block styles %}
+    {{ block.super }}
+
+    {% endblock %}
+{% block breadcrumbs %}
+    {{ block.super }}
+{% endblock %}
+
+ {% block sidebar %}
+     {{ block.super }}
+<br>
+      <form action="" method="get">
+{#      {{ filter.form.as_p }}#}
+{#{{ characteristic.form.as_p }}#}
+{#     <input class="filter-price" id="id_price__gte" name="price__gte" step="any" type="number" placeholder="от" min="0" value="{{ request.GET.price__gte }}">#}
+{#          <input class="filter-price" id="id_price__gte" name="price__gte" step="any" type="number" placeholder="от" min="0" value="{{ request.GET.price__gte }}">#}
+{#            <input class="filter-price" id="id_price__lte" name="price__lte" step="any" type="number" placeholder="до" min="0"  value="{{ request.GET.price__lte }}" >#}
+
+
+
+              {% for key, value in features_dict.items %}
+ <div class="panel panel-default">
+
+               <div class="panel-heading"> {{ key.name}}</div>
+   <div class=" panel-body">
+                  {% for v in value %}
+
+                      {% if key.slug in get_keylist and v in get_valuelist  %}
+
+                             <p>  <input type="checkbox" name="{{ key.slug }}" value="{{ v }}"  checked="checked" /> {{ v }}</p>
+                        {% else %}
+                                 <p>  <input type="checkbox" name="{{ key.slug }}" value="{{ v }}"  /> {{ v }}</p>
+
+                      {% endif %}
+                  {% endfor %}
+
+                </div>
+</div>
+              {% endfor %}
+
+
+        <input type="submit" />
+    </form>
+
+    {% endblock %}
+
+{% block content %}
+    <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+
+
+                                    <div class="col-md-4  cat-search-input">
+                                        <select class="form-control">
+                                            <option>Sort</option>
+                                            <option>Newest</option>
+                                            <option selected="">Lowest Price</option>
+                                            <option>Highest Price</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4  cat-search-input">
+{#                                        <select class="form-control">#}
+{#                                            <option>All Type</option>#}
+{#                                            <option>New</option>#}
+{#                                            <option selected="">Used</option>#}
+{#                                        </select>#}
+                                    </div>
+                                    <div class="col-md-4 text-right  cat-search-input">
+                                        <div class="view-type">
+                                            <a class="view" data-v="list" href="javascript:"><i class="fa fa-th-list fa-2x"></i></a>
+                                            <a class="view" data-v="grid" href="javascript:"><i class="fa fa-th fa-2x"></i></a>
+                                        </div>
+                                    </div>
+</div>
+    </div>
+{#    #}
+{#        <button class="view" data-v="list" href="javascript:"><i class="fa fa-list"></i> List</button>#}
+{#        <button class="view" data-v="grid" href="javascript:"><i class="fa fa-th"></i> Grid</button>#}
+{#        <div class="btn-group" role="group" aria-label="...">#}
+{##}
+{##}
+{#  <div class="btn-group" role="group">#}
+{#    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
+{#      Сортировка#}
+{#      <span class="caret"></span>#}
+{#    </button>#}
+{#    <ul class="dropdown-menu">#}
+{#      <li><a class="sort" href="javascript:" data-v="price_h">Цена по убыванию</a></li>#}
+{#      <li><a class="sort" href="javascript:" data-v="price_l">Цена по возрастанию</a></li>#}
+{#    </ul>#}
+{#  </div>#}
+{#</div>#}
+{##}
+{##}
+{##}
+{#    #}
+
+{% if request.session.view == 'list' %}
+    {% include 'products/category_list.html' %}
+{% else %}
+    {% include 'products/category_grid_new.html' %}
+{% endif %}
+
+<div class="pagination center  col-lg-12">
+
+    {% if products.has_previous %}
+        <a href="?page={{ products.previous_page_number }}">←</a>
+    {% endif %}
+
+    {% for num in products.paginator.page_range %}
+        {% if not products.paginator.page_range|length == 1 %}
+        {% if num == products.number %}
+            <span class="current"><b>{{ num }}</b></span>
+        {% else %}
+            <a href="?page={{ num }}"> {{ num }}</a>
+        {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {% if products.has_next %}
+        <a href="?page={{ products.next_page_number }}">→</a>
+    {% endif %}
+
+</div>
+{% endblock %}
+{% block js %}
+     {% comment %}<script src="{% static "js/jquery.raty.min.js"%}"></script>{% endcomment %}
+     <script src="{% static "js/star-rating.min.js"%}"></script>
+      <script src="{% static "js/catalog.js"%}"></script>
+    {% for product in products %}
+    <script>
+
+$("#product{{ product.id }}").rating('update', {{ product.average_review }});
+    </script>
+{% endfor %}
+
+{% endblock %}

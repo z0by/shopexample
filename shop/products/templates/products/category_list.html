@@ -1,0 +1,85 @@
+{% for product in products %}
+     <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="list-group category-list">
+
+                <div class="media col-md-3 col-lg-3">
+                   <div class="photo-category photo-category-list">
+                                       <a href="{{ product.get_absolute_url }}"><img src="{{ product.image_url  }}"  alt="a" width="150"/></a>
+                   </div>
+                </div>
+                <div class="col-md-5 col-lg-5">
+                    <h4 class="list-group-item-heading">     <a href="{{ product.get_absolute_url  }}"> {{ product.title }}</a></h4>
+                    <p class="list-group-item-text">{{ product.descipriton_small }} </p>
+                </div>
+                <div class="col-md-3 col-lg-3 text-center">
+
+                                                {% if product.sale_price > 0 and product.sale_price <  product.price   %}
+                                                     <h4 class="price-sale-color"><b>{{ product.sale_price  }}</b></h4>
+                                                    <h4 class="price-text-color"> <del>{{ product.price }}</del></h4>
+
+                                                    {% else %}
+                                                <br>
+                                                       <h4 class="price-text-color">
+
+                                                     {{ product.price }}
+                                              </h4>
+                                            {% endif %}
+
+                    </div>
+                  <div class="cart-list col-lg-1 col-md-1 col-lg-1">
+
+                    <div class="separator clear-left">
+                                        <p class="btn-add">
+                                          <a href="{% url 'add' product.id %}" class="in-cart" title="Добавить в корзину"><i class="fa fa-shopping-cart fa-3x"></i><i  class="hide cart-spinner fa fa-spinner fa-pulse fa-3x"></i></a></p>
+
+                                    </div>
+                      </div>
+
+
+    </div>
+    </div>
+{#                        <div class="col-sm-6 col-md-4 col-lg-3">#}
+{#                            <div class="col-item">#}
+{#                                <div class="photo">#}
+{#                                    <img src="{{ product.image_url }}" class="img-responsive" alt="a" />#}
+{#                                </div>#}
+{#                                <div class="info">#}
+{##}
+{#                                        <div class="price  col-lg-6 col-md-12">#}
+{#                                            <h4>#}
+{#                                                <a href="{{ product.get_absolute_url  }}"> {{ product.title }}</a></h4>#}
+{##}
+{#                                                {% if product.sale_price > 0 and product.sale_price <  product.price   %}#}
+{#                                                     <h4 class="price-sale-color"><b>{{ product.sale_price  }}</b></h4>#}
+{#                                                    <h4 class="price-text-color"> <del>{{ product.price }}</del></h4>#}
+{##}
+{#                                                    {% else %}#}
+{#                                                <br>#}
+{#                                                       <h4 class="price-text-color">#}
+{##}
+{#                                                     {{ product.price }}#}
+{#                                              </h4>#}
+{#                                            {% endif %}#}
+{#                                        </div>#}
+{#                                        <div class="rating  col-lg-6 col-md-12">#}
+{##}
+{#                                            <div id="product{{ product.id }}"  class="rating"  data-size="xs" data-step="0.1" data-readonly="true"  data-disabled="true" data-show-clear="false" data-show-caption="false">#}
+{##}
+{#                                            </div>#}
+{##}
+{#                                        </div>#}
+{##}
+{#                                    <div class="separator clear-left">#}
+{#                                        <p class="btn-add">#}
+{#                                            <a href="{% url 'add' product.id %}" class="" title="Добавить в корзину"><i class="fa fa-shopping-cart fa-3x"></i></a></p>#}
+{#                                        <p class="btn-details">#}
+{#                                            <a href="{{ product.get_absolute_url  }}" class="" title="Подробнее"><i class="fa fa-list fa-3x"></i></a></p>#}
+{#                                    </div>#}
+{#                                    <div class="clearfix">#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+
+{% endfor %}
+

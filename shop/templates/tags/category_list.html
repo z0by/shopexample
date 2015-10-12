@@ -1,0 +1,87 @@
+{% load mptt_tags %}
+
+<ul class="nav" id="side-menu">
+    {% recursetree nodes %}
+
+        <li>
+        {% if not node.is_leaf_node %}
+       <a href="{{ node.get_absolute_url }}">{{ node.title }} </a>
+        {% else %}
+
+             <a href="{{ node.get_absolute_url }}">{{ node.title }} </a>
+        {% endif %}
+            {% if not node.is_leaf_node %}
+               <ul class="category-children" >
+                    {{ children }}
+                </ul>
+            {% endif %}
+
+        </li>
+    {% endrecursetree %}
+</ul>
+
+
+{#<nav>#}
+{#    <ul class="nav">#}
+{#	    {% recursetree nodes %}#}
+{#              <li>#}
+{#        {% if not node.is_leaf_node %}#}
+{#       <a href="{{ node.get_absolute_url }}" id="btn-1" data-toggle="collapse" data-target="#submenu1" aria-expanded="false">{{ node.title }}</a>#}
+{#        {% else %}#}
+{##}
+{#             <a href="{{ node.get_absolute_url }}">{{ node.title }} </a>#}
+{#        {% endif %}#}
+{#             {% if not node.is_leaf_node %}#}
+{#               <ul class="nav collapse" id="submenu1" role="menu" aria-labelledby="btn-1">#}
+{#                    {{ children }}#}
+{#                </ul>#}
+{#            {% endif %}#}
+{##}
+{#        </li>#}
+{#         {% endrecursetree %}#}
+{##}
+{#	</ul>#}
+{#</nav>#}
+
+
+{% comment %}
+		<div class="sidebar-nav">
+  <div class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      </button>
+      <span class="visible-xs navbar-brand">Sidebar menu</span>
+    </div>
+    <div class="navbar-collapse collapse sidebar-navbar-collapse">
+      <ul class="nav navbar-nav" id="sidenav01">
+ {% recursetree nodes %}
+        <li>
+
+               {% if not node.is_leaf_node %}
+      <a href="{{ node.get_absolute_url }}" data-toggle="collapse" data-target="#toggleDemo" data-parent="#sidenav01" class="collapsed">{{ node.title }}</a>
+        {% else %}
+
+          <a href="{{ node.get_absolute_url }}">{{ node.title }} </a>
+        {% endif %}
+
+          </a>
+        {% if not node.is_leaf_node %}
+
+
+          <div class="collapse" id="toggleDemo" style="height: 0px;">
+            <ul class="nav nav-list">
+           {{ children }}
+            </ul>
+          </div>
+         {% endif %}
+        </li>
+
+{% endrecursetree %}#}
+      </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>{% endcomment %}

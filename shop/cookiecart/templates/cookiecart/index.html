@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block breadcrumbs %}
+{% endblock %}
+{% block content %}
+    <link href="/static/css/cart.css"  rel="stylesheet">
+		
+
+
+{#	<div class="col-md-5 col-sm-12">#}
+{#		<img src="/static/images/sprite.png" alt="cart" height="200" width="200">#}
+{#		<h1>Ваша корзина</h1>#}
+{#		<p>#}
+{#			Это Ваша корзина, здесь Вы можете оформить заказ на выбранные в нашем магазине товары. Укажите, пожалуйста, количество заказываемого товара, возможность самовывоза, адрес и удобное для Вас время доставки. Как только Вы оформите заказ, наши менеджеры сделают все для того, чтобы Вы получили качественный товар в срок и остались довольны нашей работой#}
+{#		</p>#}
+{#	</div>#}
+{#		#}
+	<div class="col-md-7 col-sm-12 text-left">
+		{% if order.good_set.all %}
+		<br>
+		{% for good in order.good_set.all %}
+		<div class="well">
+			<div class="row">
+				<div class="col-xs-6 col-sm-6 col-md-6 good">
+					<a href=/products/products/{{ good.good_type.id }}/>{{ good.good_type }}</a>
+				</div>
+				<div class="col-xs-3 col-sm-3 col-md-3 price rightal"">
+					{% if good.fixed_price %}
+					{{ good.fixed_price }}$
+					{% elif good.good_type.sale_price %}
+					{{ good.good_type.sale_price }}$
+					{% else %}
+					{{ good.good_type.price }}$
+                    {% endif %}
+				</div>
+				<div class="col-xs-2 col-sm-2 col-md-2">
+					<form action="/cart/changeammount/{{ order.id }}/{{ good.id }}/" method="post" class="form-inline">
+						{% csrf_token %}
+						<input type="integer" name="ammount" class="ammount" value={{good.ammount}} />
+						<button type="submit" class="invis"><span class="glyphicon glyphicon-refresh"></span></button>
+					</form>
+				</div>
+				<div class="col-xs-1 col-sm-1 col-md-1 remove">
+					<a class="glyphicon glyphicon-remove" href=/cart/remove/{{ order.id }}/{{ good.id }}/></a>
+				</div>
+			</div>
+		</div>
+        {% endfor %}
+		<div class="rightal">
+			<span>Итого:</span>
+			<span class="price">{{ order.get_total }}$</span>
+		</div>
+		<form action="" method="post">
+			{% csrf_token %}
+			{{ indexform.non_field_errors }}
+            <table class="tablepad">
+				{% for field in indexform %}
+					<tr>
+						<td>{{ field.label_tag }} {{ field.errors }}</td>
+						<td>{{ field }}</td>
+					</tr>
+				{% endfor %}
+            </table>
+			<input type="submit" class="add btn" value="Отправить заказ" />
+		</form>
+	</div>
+    {% else %}
+    <h3>Ваша корзина пуста</h3>
+    {% endif %}
+
+<script src="/static/js/cart.js"%}"></script>
+{% endblock %}

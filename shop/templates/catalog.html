@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load mptt_tags %}
+{% load products_tags %}
+
+
+    {% block sidebar %}
+{% categories_tree request %}
+    {% endblock %}
+

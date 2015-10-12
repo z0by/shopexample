@@ -1,0 +1,70 @@
+{% load mptt_tags %}
+<div id="MainMenu">
+<div class="list-group panel">
+
+    {% recursetree nodes %}
+
+        {% if  node.is_root_node %}
+              <a href="#{{node.slug }}" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">{{ node.title }}</a>
+                <div class="collapse" id="{{node.slug }}">
+
+        {% endif %}
+
+        {% if not node.is_root_node and not node.is_leaf_node %}
+
+             <a href="#{{node.slug }}" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#{{node.slug }}">{{node.title }}</a>
+        <div class="collapse list-group-submenu" id="{{node.slug }}">
+
+{#       <a href="{{ node.get_absolute_url }}">{{ node.title }} </a>#}
+        {% elif not node.is_root_node and node.is_leaf_node %}
+{##}
+{#             <a href="{{ node.get_absolute_url }}">{{ node.title }} </a>#}
+             <a href="{{ node.get_absolute_url }}" class="list-group-item" data-parent="#{{ node.parent.slug }}">{{ node.title }}</a>
+        </div>
+        {% endif %}
+        {% if not node.is_root_node and node.is_leaf_node %}
+{##}
+{#             <a href="{{ node.get_absolute_url }}">{{ node.title }} </a>#}
+
+
+
+        {% endif %}
+            {% if not node.is_leaf_node %}
+
+                    {{ children }}
+
+  </div>
+            {% endif %}
+
+
+    {% endrecursetree %}
+
+
+</div>
+</div>
+{#<div id="MainMenu">#}
+{#  <div class="list-group panel">#}
+{#    <a href="#demo3" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Item 3</a>#}
+{#    <div class="collapse" id="demo3">#}
+{#      <a href="#SubMenu1" class="list-group-item" data-toggle="collapse" data-parent="#SubMenu1">Subitem 1 <i class="fa fa-caret-down"></i></a>#}
+{#      <div class="collapse list-group-submenu" id="SubMenu1">#}
+{#        <a href="#" class="list-group-item" data-parent="#SubMenu1">Subitem 1 a</a>#}
+{#        <a href="#" class="list-group-item" data-parent="#SubMenu1">Subitem 2 b</a>#}
+{#        <a href="#SubSubMenu1" class="list-group-item" data-toggle="collapse" data-parent="#SubSubMenu1">Subitem 3 c <i class="fa fa-caret-down"></i></a>#}
+{#        <div class="collapse list-group-submenu list-group-submenu-1" id="SubSubMenu1">#}
+{#          <a href="#" class="list-group-item" data-parent="#SubSubMenu1">Sub sub item 1</a>#}
+{#          <a href="#" class="list-group-item" data-parent="#SubSubMenu1">Sub sub item 2</a>#}
+{#        </div>#}
+{#        <a href="#" class="list-group-item" data-parent="#SubMenu1">Subitem 4 d</a>#}
+{#      </div>#}
+{#      <a href="javascript:;" class="list-group-item">Subitem 2</a>#}
+{#      <a href="javascript:;" class="list-group-item">Subitem 3</a>#}
+{#    </div>#}
+{#    <a href="#demo4" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Item 4</a>#}
+{#    <div class="collapse" id="demo4">#}
+{#      <a href="" class="list-group-item">Subitem 1</a>#}
+{#      <a href="" class="list-group-item">Subitem 2</a>#}
+{#      <a href="" class="list-group-item">Subitem 3</a>#}
+{#    </div>#}
+{#  </div>#}
+{#</div>#}

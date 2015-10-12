@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+Восстановление пароля
+
+{% block content %}
+    Пожалуйста, введите адрес электронной почты, который Вы указали при регистрации:
+<form action="/accounts/restorepass/" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit" />
+{% endblock %}
